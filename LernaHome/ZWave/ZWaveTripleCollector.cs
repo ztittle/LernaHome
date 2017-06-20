@@ -4,7 +4,7 @@ using System.Linq;
 using VDS.RDF;
 using VDS.RDF.Storage;
 using System.Threading.Tasks;
-using ZWaveControllerClient.SerialIO;
+using ZWaveControllerClient.Serial;
 using ZWaveControllerClient;
 using ZWaveControllerClient.CommandClasses;
 
@@ -25,10 +25,10 @@ namespace LernaHome.ZWave
         {
             switch (e.Frame.Function)
             {
-                case ZWaveFunction.FUNC_ID_ZW_APPLICATION_UPDATE:
+                case ZWaveFunction.ApplicationUpdate:
                     SaveNodesToStore();
                     break;
-                case ZWaveFunction.FUNC_ID_APPLICATION_COMMAND_HANDLER:
+                case ZWaveFunction.ApplicationCommandHandler:
                     break;
             }
         }

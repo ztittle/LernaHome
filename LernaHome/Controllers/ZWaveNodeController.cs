@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using VDS.RDF;
 using VDS.RDF.Storage;
 using ZWaveControllerClient;
-using ZWaveControllerClient.SerialIO;
+using ZWaveControllerClient.Serial;
 
 namespace LernaHome.Controllers
 {
@@ -87,8 +87,8 @@ WHERE {
             var cmdSet = cmdClass.Commands.First(c => c.Name == "SWITCH_MULTILEVEL_SET");
             var cmdGet = cmdClass.Commands.First(c => c.Name == "SWITCH_MULTILEVEL_GET");
 
-            var f = await _zwaveController.SendCommand(node, cmdClass, cmdSet, byte.Parse(valueNode.Value));
-            var f2 = await _zwaveController.SendCommand(node, cmdClass, cmdGet);
+            var f = await _zwaveController.SendCommand(node, cmdClass, cmdSet, TransmitOptions.Acknowledge, byte.Parse(valueNode.Value));
+            var f2 = await _zwaveController.SendCommand(node, cmdClass, cmdGet, TransmitOptions.Acknowledge);
 
             return graph;
         }
