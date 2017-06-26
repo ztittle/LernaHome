@@ -20,7 +20,7 @@ namespace LernaHome.Controllers
             _zwaveController = zwaveController;
         }
 
-        [HttpGet]
+        [HttpGet("", Name = Routes.Nodes.Get)]
         public IGraph Get()
         {
             var g = (IGraph)_tripleStore.Query(@"

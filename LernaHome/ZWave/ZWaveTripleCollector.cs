@@ -36,9 +36,9 @@ namespace LernaHome.ZWave
         public void SaveNodesToStore()
         {
             var graph = new Graph()
-                .WithDefaultNamespaces();
+                .SetDefaultNamespaces();
 
-            graph.BaseUri = new Uri(UriHelper.BuildAbsolute("http", new Microsoft.AspNetCore.Http.HostString("localhost")));
+            graph.BaseUri = new Uri(UriHelper.BuildAbsolute("http", new Microsoft.AspNetCore.Http.HostString("localhost:5000")));
             var subject = new Uri(graph.BaseUri, "api/nodes");
 
             var zwNodes = _zwaveController.Nodes;

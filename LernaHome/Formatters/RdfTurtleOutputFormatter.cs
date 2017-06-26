@@ -10,13 +10,11 @@ using VDS.RDF.Writing;
 
 namespace ZWaveAdmin.Formatters
 {
-    public class RdfTurtleOutputFormatter : TextOutputFormatter
+    public class RdfTurtleOutputFormatter : OutputFormatter
     {
         public RdfTurtleOutputFormatter()
         {
             SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("text/turtle"));
-
-            SupportedEncodings.Add(Encoding.UTF8);
         }
 
         protected override bool CanWriteType(Type type)
@@ -24,7 +22,7 @@ namespace ZWaveAdmin.Formatters
             return typeof(IGraph).GetTypeInfo().IsAssignableFrom(type);
         }
 
-        public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+        public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context)
         {
             IServiceProvider serviceProvider = context.HttpContext.RequestServices;
 

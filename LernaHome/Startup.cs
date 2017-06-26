@@ -13,9 +13,26 @@ using System.Threading.Tasks;
 using ZWaveControllerClient.Serial;
 using ZWaveControllerClient.Xml;
 using System.Threading;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace LernaHome
 {
+
+    public class ApiDocumentationFilter : IActionFilter
+    {
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            var urlHelper = new UrlHelper(context);
+            var apiUrl = urlHelper.Link(Routes.ApiDocs.Get, null);
+            context.HttpContext.Response.Headers.Add("Link", $@"<{apiUrl}>; rel=""http://www.w3.org/ns/hydra/core#apiDocumentation""");
+
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
+        }
+    }
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -57,7 +74,11 @@ namespace LernaHome
 
             // Add framework services.
             services.AddMvcCore()
-                .AddRdfFormatters();
+                .AddRdfFormatters()
+                .AddMvcOptions(opt =>
+                {
+                    opt.Filters.Add(new ApiDocumentationFilter());
+                });
             services.AddCors();
         }
 

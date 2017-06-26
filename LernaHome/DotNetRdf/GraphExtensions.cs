@@ -38,7 +38,7 @@ namespace VDS.RDF
             return new FluentGraphBuilder(bnode);
         }
 
-        public static IGraph WithDefaultNamespaces(this IGraph graph)
+        public static IGraph SetDefaultNamespaces(this IGraph graph)
         {
             graph.NamespaceMap.AddNamespace("rdf", new Uri("http://www.w3.org/1999/02/22-rdf-syntax-ns#"));
             graph.NamespaceMap.AddNamespace("xsd", new Uri("http://www.w3.org/2001/XMLSchema#"));

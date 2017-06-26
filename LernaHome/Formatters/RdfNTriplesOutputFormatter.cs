@@ -10,13 +10,11 @@ using VDS.RDF.Writing;
 
 namespace ZWaveAdmin.Formatters
 {
-    public class RdfNTriplesOutputFormatter : TextOutputFormatter
+    public class RdfNTriplesOutputFormatter : OutputFormatter
     {
         public RdfNTriplesOutputFormatter()
         {
             SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/n-triples"));
-
-            SupportedEncodings.Add(Encoding.UTF8);
         }
 
         protected override bool CanWriteType(Type type)
@@ -24,7 +22,7 @@ namespace ZWaveAdmin.Formatters
             return typeof(IGraph).GetTypeInfo().IsAssignableFrom(type);
         }
 
-        public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+        public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context)
         {
             IServiceProvider serviceProvider = context.HttpContext.RequestServices;
 

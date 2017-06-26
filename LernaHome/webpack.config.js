@@ -1,7 +1,8 @@
 ﻿var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: './UI/App.jsx',
+  entry: ['babel-polyfill', './UI/app.jsx'],
   output: {
     path: path.resolve(__dirname, 'wwwroot/dist'),
     filename: 'app.js'
@@ -14,14 +15,17 @@ module.exports = {
       rules: [
           {
               test: /\.jsx?$/,
-              exclude: /(node_modules|bower_components)/,
+              exclude: /node_modules/,
               use: {
                   loader: 'babel-loader',
                   options: {
-                      presets: ['env', 'react']
+                      presets: ['env', 'es2015', 'react', 'stage-0']
                   }
               }
           }
       ]
-  }
+  },
+  plugins: [
+    new webpack.ContextReplacementPlugin(/heracles/, 'heracles.js')
+  ]
 };

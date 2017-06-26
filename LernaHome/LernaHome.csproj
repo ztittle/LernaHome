@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="UI\App.jsx" />
+    <Content Include="UI\app.jsx" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +52,10 @@
     <Content Update="C:\Users\Zandt.HOME\.nuget\packages\zwavecontrollerclient\0.3.3-alpha\contentFiles\any\netstandard1.5\Xml\ZWave_custom_cmd_classes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\actions\" />
+    <Folder Include="UI\reducers\" />
   </ItemGroup>
 
 </Project>
