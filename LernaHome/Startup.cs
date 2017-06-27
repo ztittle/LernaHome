@@ -52,11 +52,11 @@ namespace LernaHome
         {
             var dir = Path.GetDirectoryName(typeof(Startup).GetTypeInfo().Assembly.Location);
 
-            var xmlConfig = File.OpenRead($@"{dir}\xml\ZWave_custom_cmd_classes.xml");
+            var xmlConfig = File.OpenRead(Path.Combine(dir, "xml/ZWave_custom_cmd_classes.xml"));
             var xmlParser = new ZWaveClassesXmlParser();
             var loggerFactory = new LoggerFactory()
                 .AddConsole();
-            var zwaveController = new ZWaveSerialController("COM3", xmlParser.Parse(xmlConfig), loggerFactory);
+            var zwaveController = new ZWaveSerialController("/dev/tty.usbmodem411", xmlParser.Parse(xmlConfig), loggerFactory);
             zwaveController.Connect();
 
             var store = new InMemoryManager();
@@ -65,8 +65,9 @@ namespace LernaHome
 
             Task.Run(async () =>
             {
-                await zwaveController.DiscoverNodes(CancellationToken.None);
-                await zwaveController.FetchNodeInfo(CancellationToken.None);
+                var tcs = new CancellationTokenSource(20000);
+                await zwaveController.DiscoverNodes(tcs.Token);
+                await zwaveController.FetchNodeInfo(tcs.Token);
 
                 var zwaveTripleCollector = new ZWaveTripleCollector(zwaveController, store);
                 zwaveTripleCollector.SaveNodesToStore();
